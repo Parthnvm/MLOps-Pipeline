@@ -1,205 +1,95 @@
-# 🚀 MLOps Pipeline
+# MLOps Pipeline
 
-> **From data to deployment — a simple, practical MLOps pipeline built from scratch.**
+An end-to-end machine learning pipeline built to explore practical MLOps concepts — from data preparation and model training to experiment tracking, API serving, containerization, and CI/CD.
 
-A personal project exploring how a machine learning model moves beyond a notebook and into a reproducible, trackable, and deployable workflow.
+## Overview
 
-This project uses the **Iris dataset** as a lightweight example to demonstrate an end-to-end ML lifecycle — from data preparation and model training to experiment tracking, API serving, containerization, and CI/CD automation.
+This project uses the **Iris dataset** to demonstrate a simple but complete ML workflow.
 
----
-
-## 🧠 What This Project Demonstrates
-
-Machine learning isn't just about training a model.
-
-A useful ML system also needs a reliable way to:
-
-**Prepare data → Train → Track experiments → Save the model → Serve predictions → Automate the workflow**
-
-That's what this project is designed to demonstrate.
-
-### Pipeline
+The focus is not on the complexity of the model, but on understanding the engineering practices around building and deploying machine learning systems.
 
 ```text
-                ┌─────────────────┐
-                │   Iris Dataset  │
-                └────────┬────────┘
-                         │
-                         ▼
-                ┌─────────────────┐
-                │  Data Pipeline  │
-                │  prepare_data   │
-                └────────┬────────┘
-                         │
-                         ▼
-                ┌─────────────────┐
-                │ Model Training  │
-                │ Random Forest   │
-                └────────┬────────┘
-                         │
-              ┌──────────┴──────────┐
-              ▼                     ▼
-       ┌─────────────┐       ┌─────────────┐
-       │   MLflow    │       │  model.pkl  │
-       │ Experiments │       │    Model    │
-       └─────────────┘       └──────┬──────┘
-                                    │
-                                    ▼
-                           ┌─────────────────┐
-                           │   FastAPI API   │
-                           │    /predict     │
-                           └────────┬────────┘
-                                    │
-                                    ▼
-                           ┌─────────────────┐
-                           │     Docker      │
-                           └────────┬────────┘
-                                    │
-                                    ▼
-                           ┌─────────────────┐
-                           │ GitHub Actions  │
-                           │     CI/CD       │
-                           └─────────────────┘
+Data → Training → Experiment Tracking → Model → API → Docker → CI/CD
 ```
 
----
+## Tech Stack
 
-## ✨ Features
+* **Python** — Core development
+* **Scikit-learn** — Model training
+* **Pandas** — Data processing
+* **MLflow** — Experiment tracking
+* **FastAPI** — Model serving
+* **Docker** — Containerization
+* **GitHub Actions** — CI/CD
+* **DVC** — Data versioning
+* **Joblib** — Model serialization
 
-* 🌱 **Automated data preparation** using the Iris dataset
-* 🤖 **Random Forest classification** for model training
-* 📊 **Experiment tracking with MLflow**
-* 📦 **Model serialization** using Joblib
-* ⚡ **FastAPI inference API**
-* 🐳 **Dockerized application**
-* 🔄 **GitHub Actions CI/CD pipeline**
-* 💾 **DVC integration** for data/version management
-* 🧩 Simple and modular project structure
-
----
-
-## 🛠️ Tech Stack
-
-| Technology        | Purpose                             |
-| ----------------- | ----------------------------------- |
-| 🐍 Python         | Core development                    |
-| 🐼 Pandas         | Data processing                     |
-| 🧠 Scikit-learn   | Machine learning                    |
-| 📈 MLflow         | Experiment tracking & model logging |
-| ⚡ FastAPI         | Model serving                       |
-| 🚀 Uvicorn        | ASGI server                         |
-| 🐳 Docker         | Containerization                    |
-| 🔄 GitHub Actions | CI/CD automation                    |
-| 📦 DVC            | Data versioning                     |
-| 🔧 Joblib         | Model serialization                 |
-
----
-
-## 📁 Project Structure
+## Project Structure
 
 ```text
 MLOps-Pipeline/
 │
-├── .dvc/                    # DVC configuration
 ├── .github/
 │   └── workflows/
-│       └── deploy.yml       # CI/CD workflow
+│       └── deploy.yml
 │
 ├── data/
-│   └── iris.csv             # Prepared dataset
+│   └── iris.csv
 │
 ├── src/
-│   ├── prepare_data.py      # Data preparation
-│   ├── train.py             # Model training & MLflow tracking
-│   └── app.py               # FastAPI inference service
+│   ├── prepare_data.py
+│   ├── train.py
+│   └── app.py
 │
-├── mlruns/                  # MLflow experiment artifacts
-├── mlflow.db                # MLflow tracking database
-├── model.pkl                # Trained model
-├── dockerfile               # Docker configuration
-├── requirements.txt         # Python dependencies
+├── mlruns/
+├── model.pkl
+├── dockerfile
+├── requirements.txt
 └── README.md
 ```
 
----
-
-## 🔄 How It Works
+## Pipeline
 
 ### 1. Data Preparation
 
-The pipeline starts by loading the built-in **Iris dataset** from Scikit-learn and converting it into a structured CSV file.
+The Iris dataset is prepared and saved as a CSV file.
 
 ```bash
 python src/prepare_data.py
 ```
 
-This creates:
-
-```text
-data/iris.csv
-```
-
-The dataset contains the four flower measurements used for classification:
-
-* Sepal length
-* Sepal width
-* Petal length
-* Petal width
-
----
-
 ### 2. Model Training
 
-The training pipeline loads the prepared dataset and trains a **Random Forest Classifier**.
+A Random Forest classifier is trained using the prepared dataset.
 
 ```bash
 python src/train.py
 ```
 
-The training process:
+The training process includes:
 
-1. Loads the dataset
-2. Splits data into training and testing sets
-3. Creates a Random Forest model
-4. Trains the model
-5. Evaluates accuracy
-6. Logs parameters and metrics to MLflow
-7. Saves the trained model as `model.pkl`
+* Dataset loading and preprocessing
+* Train/test split
+* Random Forest training
+* Model evaluation
+* Experiment logging with MLflow
+* Model serialization
 
-The current experiment tracks parameters such as:
-
-```text
-n_estimators = 100
-max_depth    = 5
-```
-
-MLflow is used to record the experiment and model information.
-
----
-
-## 📊 Experiment Tracking with MLflow
-
-MLflow makes it possible to keep track of model experiments instead of relying on scattered notebooks or manual notes.
-
-The project creates an experiment called:
+The trained model is saved as:
 
 ```text
-iris_classification
+model.pkl
 ```
 
-Tracked information includes:
+### 3. Experiment Tracking
 
-* Model hyperparameters
-* Accuracy
-* Trained model artifact
+MLflow is used to track model experiments, including parameters, metrics, and model artifacts.
 
-This provides a foundation for comparing experiments and managing model iterations.
+The project uses an `iris_classification` experiment to keep track of training runs.
 
----
+### 4. API
 
-## ⚡ FastAPI Model Serving
-
-Once the model has been trained, it can be exposed through a REST API.
+The trained model is exposed through a FastAPI application.
 
 Start the API with:
 
@@ -207,21 +97,13 @@ Start the API with:
 uvicorn src.app:app --reload
 ```
 
-The API provides:
+Once running, the API documentation is available at:
 
-### Health / Home
-
-```http
-GET /
+```text
+http://localhost:8000/docs
 ```
 
-### Prediction
-
-```http
-POST /predict
-```
-
-Example request:
+The prediction endpoint accepts the four Iris features:
 
 ```json
 {
@@ -232,27 +114,9 @@ Example request:
 }
 ```
 
-Example response:
+### 5. Docker
 
-```json
-{
-  "prediction": 0
-}
-```
-
-FastAPI also provides interactive API documentation at:
-
-```text
-http://localhost:8000/docs
-```
-
-The `/predict` endpoint accepts the four Iris measurements and uses the saved model to generate a prediction.
-
----
-
-## 🐳 Running with Docker
-
-The application includes a Docker configuration based on Python 3.9.
+The application can be packaged and run using Docker.
 
 Build the image:
 
@@ -272,55 +136,25 @@ The API will then be available at:
 http://localhost:8000
 ```
 
-Interactive Swagger documentation:
+### 6. CI/CD
+
+GitHub Actions is used to automate parts of the ML workflow when changes are pushed to the repository.
+
+The workflow currently handles:
 
 ```text
-http://localhost:8000/docs
+Checkout
+   ↓
+Setup Python
+   ↓
+Install Dependencies
+   ↓
+Prepare Data
+   ↓
+Train Model
 ```
 
-The container exposes port `8000` and starts the FastAPI application using Uvicorn.
-
----
-
-## 🔄 CI/CD with GitHub Actions
-
-The project also includes a GitHub Actions workflow that runs when changes are pushed to the `main` branch.
-
-The workflow currently:
-
-```text
-Push to main
-     │
-     ▼
-Checkout repository
-     │
-     ▼
-Setup Python 3.9
-     │
-     ▼
-Install dependencies
-     │
-     ▼
-Prepare data
-     │
-     ▼
-Train model
-```
-
-This helps automate the ML workflow and ensures that the data preparation and training steps can be reproduced in CI.
-
----
-
-## 💻 Getting Started
-
-### Prerequisites
-
-Make sure you have:
-
-* Python 3.9+
-* Git
-* Docker *(optional)*
-* DVC *(optional, depending on your workflow)*
+## Getting Started
 
 ### Clone the repository
 
@@ -374,90 +208,35 @@ Then open:
 http://localhost:8000/docs
 ```
 
----
+## Project Goals
 
-## 🧪 Example Workflow
+This project was built as a hands-on way to understand how a machine learning model can move from a local training script toward a more structured and reproducible workflow.
 
-A complete local run looks like this:
+The main areas explored are:
 
-```bash
-# 1. Prepare data
-python src/prepare_data.py
+* Data preparation
+* Model training
+* Experiment tracking
+* Model serialization
+* API-based inference
+* Containerization
+* CI/CD automation
 
-# 2. Train and track the model
-python src/train.py
+## Future Improvements
 
-# 3. Start the API
-uvicorn src.app:app --reload
-```
+* Add automated tests
+* Improve data and model versioning
+* Add model validation
+* Add a model registry
+* Automate Docker image builds
+* Add cloud deployment
+* Add model and data drift monitoring
+* Add automated retraining
 
-Then test the prediction endpoint through the Swagger UI:
+## Author
 
-```text
-http://localhost:8000/docs
-```
+**Parth**
 
----
+This is a personal project built to learn and experiment with practical MLOps workflows.
 
-## 🎯 Why I Built This
-
-This project was built as a hands-on exploration of **MLOps concepts** and the transition from a traditional machine learning workflow to a more automated engineering workflow.
-
-The goal wasn't to build the most complex ML model.
-
-Instead, I wanted to understand the pieces that surround a model:
-
-> **How do we prepare data consistently?**
-> **How do we track experiments?**
-> **How do we package a trained model?**
-> **How do we expose it as an API?**
-> **How do we automate the workflow?**
-
-Using a small dataset keeps the ML problem simple so the focus stays on the **ML engineering and MLOps workflow**.
-
----
-
-## 🚧 Future Improvements
-
-This project is intentionally lightweight and serves as a foundation for further experimentation.
-
-Potential improvements include:
-
-* [ ] Add automated unit & integration tests
-* [ ] Add model validation gates
-* [ ] Add model versioning through a model registry
-* [ ] Improve DVC-based data pipeline integration
-* [ ] Add automated Docker image builds
-* [ ] Push images to a container registry
-* [ ] Add cloud deployment
-* [ ] Add model monitoring
-* [ ] Add data/model drift detection
-* [ ] Add automated retraining
-* [ ] Add proper CI/CD deployment stages
-* [ ] Add API authentication and production configuration
-
----
-
-## 📌 Current Scope
-
-This is a **personal learning project** focused on understanding the fundamentals of an end-to-end MLOps workflow.
-
-The ML problem itself is intentionally simple; the interesting part is the engineering around it.
-
-**Data → ML → Tracking → API → Container → Automation**
-
----
-
-## ⭐ If You Find It Useful
-
-Feel free to explore the repository, experiment with the pipeline, or use it as a starting point for your own MLOps projects.
-
-If you found it useful, consider giving the repository a ⭐.
-
-**Built with curiosity, Python, and a little bit of MLOps. 🚀**
-
----
-
-### 🔗 Repository
-
-[View MLOps-Pipeline on GitHub](https://github.com/Parthnvm/MLOps-Pipeline?utm_source=chatgpt.com)
+[GitHub Repository](https://github.com/Parthnvm/MLOps-Pipeline)
