@@ -5,6 +5,7 @@ from sklearn.metrics import accuracy_score
 import mlflow
 import mlflow.sklearn
 import joblib
+mlflow.sklearn.autolog()
 
 # 1. Load Data
 df = pd.read_csv('data/iris.csv')
@@ -14,6 +15,7 @@ y = df['target']
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
 # 2. Start MLflow Experiment
+mlflow.set_tracking_uri("sqlite:///mlflow.db")
 mlflow.set_experiment("iris_classification")
 
 with mlflow.start_run():
